@@ -1,0 +1,73 @@
+#include<iostream>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+class product{
+	private:
+		int code ;
+		char name[20];
+		int qty;
+		float price;
+	public: 
+		void input_product()
+		{ 
+		  cout<<"Input code = "; cin>>code;
+		  cout<<"Input Name= "; cin>>name;	
+		  cout<<"Input Quantity= "; cin>>qty;
+		  cout<<"Input price = "; cin>>price;
+		}
+		
+		void output_product()
+		{
+			cout<<left<<setw(12)<<code<<setw(12)<<name<<setw(12)<<qty<<setw(12)<<price<<endl;
+			
+		}
+};
+
+int main()
+{
+	int n,i,op;
+	product pro;
+    cout<<"----------------Menu-------------------"<<endl;
+    cout<<"1.Write"<<endl;
+    cout<<"2.Read"<<endl;
+    cout<<"3.Search"<<endl;
+    cout<<"Exit"<<endl;
+    cout<<"Choose one option: "; cin>>op;
+    
+    switch(op)
+    {
+    	case 1:
+    		{
+    		//creating file
+    	fstream my_file;  
+		 //opening file 
+    		my_file.open("Product.bin",ios::out|ios::binary) ;  //ber binary put ios::binary 
+        cout<<"Input of product: "; cin>>n;
+        for(i=0;i<n;i++)
+		{
+        	cout<<"==========Product #"<<i+1<<endl;
+        	pro.input_product();
+        	cout<<endl;
+        	my_file.write((char*)&pro,sizeof(pro));
+		}
+		//close file
+	      my_file.close();
+		} break;
+		
+		case 2:
+		{
+					//creating file
+	    	fstream my_file;  
+			 //opening file 
+	    		my_file.open("Product.bin",ios::in|ios::binary) ;  //ber binary put ios::binary 
+                cout<<left<<setw(12)<<code<<setw(12)<<name<<setw(12)<<qty<<setw(12)<<price<<endl;
+            while(my_file.open(my_file.write((char*)&pro,sizeof(pro)));	
+	       {
+	       	pro.output_product();
+		   }
+			//close file
+		      my_file.close();
+		 } break;
+		}
+}
