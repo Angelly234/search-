@@ -1,6 +1,7 @@
 #include<iostream>
 #include<fstream>
 #include<iomanip>
+#include<string.h>
 using namespace std;
 class product{
 	private:
@@ -25,49 +26,68 @@ class product{
 };
 
 int main()
-{
+{   
 	int n,i,op;
 	product pro;
-    cout<<"----------------Menu-------------------"<<endl;
-    cout<<"1.Write"<<endl;
-    cout<<"2.Read"<<endl;
-    cout<<"3.Search"<<endl;
-    cout<<"Exit"<<endl;
-    cout<<"Choose one option: "; cin>>op;
-    
-    switch(op)
-    {
-    	case 1:
-    		{
-    		//creating file
-    	fstream my_file;  
-		 //opening file 
-    		my_file.open("Product.bin",ios::out|ios::binary) ;  //ber binary put ios::binary 
-        cout<<"Input of product: "; cin>>n;
-        for(i=0;i<n;i++)
-		{
-        	cout<<"==========Product #"<<i+1<<endl;
-        	pro.input_product();
-        	cout<<endl;
-        	my_file.write((char*)&pro,sizeof(pro));
-		}
-		//close file
-	      my_file.close();
-		} break;
-		
-		case 2:
-		{
-					//creating file
+	do 
+	{
+		cout<<"----------------Menu-------------------"<<endl;
+	    cout<<"1.Write"<<endl;
+	    cout<<"2.Read"<<endl;
+	    cout<<"3.Search"<<endl;
+	    cout<<"Exit"<<endl;
+	    cout<<"Choose one option: "; cin>>op;
+	    
+	    switch(op)
+	    {
+	    	case 1:
+	    		{
+	    		//creating file
 	    	fstream my_file;  
 			 //opening file 
-	    		my_file.open("Product.bin",ios::in|ios::binary) ;  //ber binary put ios::binary 
-                cout<<left<<setw(12)<<code<<setw(12)<<name<<setw(12)<<qty<<setw(12)<<price<<endl;
-            while(my_file.open(my_file.write((char*)&pro,sizeof(pro)));	
-	       {
-	       	pro.output_product();
-		   }
+	    		my_file.open("Product.bin",ios::out|ios::binary) ;  //ber binary put ios::binary 
+	        cout<<"Input of product: "; cin>>n;
+	        for(i=0;i<n;i++)
+			{
+	        	cout<<"==========Product #"<<i+1<<endl;
+	        	pro.input_product();
+	        	cout<<endl;
+	        	my_file.write((char*)&pro,sizeof(pro));
+			}
 			//close file
 		      my_file.close();
-		 } break;
-		}
+			} break;
+			
+			case 2:
+			{
+						//creating file
+		    	fstream my_file;  
+				 //opening file 
+		    		my_file.open("Product.bin",ios::in|ios::binary) ;  //ber binary put ios::binary 
+	                cout<<left<<setw(12)<<"code"<<setw(12)<<"name"<<setw(12)<<"Quantity"<<setw(12)<<"Price"<<endl;
+	           while(my_file.read((char*)&pro,sizeof(pro)))
+		       {
+		        pro.output_product();
+			   }
+				//close file
+			      my_file.close();
+			 } break;
+			 case 3:
+			 	fstream my_file;
+			 	my_file.open("Product.bin",ios::in|ios::binary);
+			 	char sname[20];
+			 	cout<<"Input Name to seacrh:";
+			 	cin>>sname;
+			 	while(my_file.read((char*)&pro,sizeof(pro)))
+			 	{
+			 		if(strcmp(sname,pro.getsname)==0)
+			 		{
+			 			      cout<<left<<setw(12)<<"code"<<setw(12)<<"name"<<setw(12)<<"Quantity"<<setw(12)<<"Price"<<endl;
+			 			      pro.output_product();
+					 }
+					
+				 } my_file.close();
+			}break;	
+	}while(op!=0);
+    
 }
